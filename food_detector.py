@@ -25,8 +25,6 @@ def classify_food():
     final_result = "True" if result1.startswith("True") and result2.startswith("True") else "False"
 
     return jsonify({
-        "first_result": result1,
-        "second_result": result2,
         "final_result": final_result
     })
 
@@ -68,16 +66,16 @@ def classify_food_image(image_url, is_second_image=False):
     
     if is_second_image:
         if food_coverage < 0.2:
-            return "True (Empty or Plate After Food Eaten)"
+            return True
         else:
-            return "False (Not an Empty or Leftover Plate)"
+            return False
     else:
         if yellow_coverage > 0.5:
-            return "False (Empty Colored Plate)"
+            return False
         if food_coverage > 0.2:
-            return "True (Food Present)"
+            return True
         else:
-            return "False (Empty or Leftover Food)"
+            return False
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
